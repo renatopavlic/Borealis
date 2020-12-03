@@ -1,23 +1,62 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
+import Button from '@material-ui/core/Button';
+
+import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import UserForm from "./components/UserForm/UserForm";
+
 import './App.css';
 
+// Material UI custom styling for Modal
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    position: 'absolute',
+    width: "80vw",
+    height: "77vh",
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
+}));
+
 function App() {
+
+  const classes = useStyles();
+  const [modalStyle] = useState(getModalStyle);
+  const [open, setOpen] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <main>
+        <h1>Konfigurator servisa</h1>
+        <Button 
+        variant="contained" 
+        color="primary"
+        onClick={() => setOpen(true)}>Pokreni Konfigurator
+        </Button>
+        <p>Izračunajte trošak servisa</p>
+        <Modal
+          id="modal"
+          open={open}
+        onClose={ () => setOpen(false)}>
+          <div style={modalStyle} className={classes.paper}>
+            <UserForm />
+          </div>
+        </Modal>
+      </main>
+    
     </div>
   );
 }

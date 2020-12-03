@@ -1,0 +1,108 @@
+.selectservice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.selectservice__options {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 700px;
+}
+
+.selectservice__box {
+  background-color: white;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.selectservice__box > label {
+  padding-left: 10px;
+}
+
+.selectservice__title {
+  color: black;
+}
+
+.selectservice__colOne,
+.selectservice__colTwo {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.selectservice__price {
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: flex-end;
+  width: 80%;
+}
+
+.selectservice__price > h2 {
+  color: #3f51b5;
+  padding-bottom: 10px;
+}
+
+.selectservice__coupon {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  padding: 20px 5px;
+}
+
+.selectservice__couponInput {
+  height: 35px;
+  min-width: 200px;
+}
+
+.selectservice__couponMsg {
+  color: green;
+  padding-bottom: 10px;
+}
+
+.selectservice__calculation {
+  padding: 20px;
+  display: flex;
+  width: 80%;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+}
+
+.selectservice__calculationColOne,
+.selectservice__calculationColTwo {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectservice__calculationColOne {
+  justify-content: flex-start;
+}
+
+.selectservice__calculationColTwo {
+  align-items: flex-end;
+}
+
+.selectservice__calculationColOne > h4,
+.selectservice__calculationColTwo > h4 {
+  padding: 10px 0;
+}
+
+.selectservice__calculationColTwo > h1 {
+  border-top: 1px solid lightgray;
+  color: black;
+}

@@ -1,0 +1,50 @@
+.overview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.overview__info {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.overview__title {
+  color: black;
+}
+
+.overview__info > p {
+  padding-top: 20px;
+}
+
+.overview__row {
+  display: flex;
+  width: 90%;
+  border-bottom: 3px solid grey;
+  background-color: white;
+}
+
+.overview__left,
+.overview__right {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10px 10px;
+  border: 1px solid red;
+}
+
+.overview__editbox {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.overview__editbox > button {
+  margin-left: 10px;
+}

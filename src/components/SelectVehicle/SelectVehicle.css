@@ -1,0 +1,38 @@
+.selectvehicle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.selectvehicle__options {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid lightgrey;
+  border-radius: 10px;
+  height: 150px;
+  max-width: 760px;
+}
+
+.selectvehicle__form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.selectvehicle__box {
+  background-color: white;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+}
+
+.selectvehicle__box > label {
+  padding-left: 10px;
+}
+
+.selectvehicle__title {
+  text-align: center;
+  color: black;
+}
