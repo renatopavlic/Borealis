@@ -1,82 +1,90 @@
-import React, { useState } from 'react';
+import { Button } from '@material-ui/core';
+import React, { useState, useContext, useEffect } from 'react';
+
+import { FormContext} from "../../context/FormContext"
 
 import NavigationBtn from "../NavigationBtn/NavigationBtn"
 
 import "./SelectVehicle.css";
 
 function SelectVehicle({ nextPage, prevPage }) {
+  
+  const vehicles = [{
+    name: "peugeot",
+    label: "Peugeot"
+  }, {
+    name: "volkswagen",
+    label: "Volkswagen"
+  }, {
+    name: "citroen",
+    label: "Citroen"
+  }, {
+    name: "audi",
+    label: "Audi"
+  }, {
+    name: "bmw",
+    label: "Bmw"
+  }, {
+    name: "seat",
+    label: "Seat"
+  }, {
+    name: "alfaromeo",
+    label: "Alfa Romeo"
+  }, {
+    name: "kia",
+    label: "Kia"
+  }, {
+    name: "hyundai",
+    label: "Hyundai"
+  }, {
+    name: "honda",
+    label: "Honda"
+  }, {
+    name: "toyota",
+    label: "Toyota"
+  }];
 
-  const [itemChecked, setItemChecked] = useState(false);
+ const [formData, setFormData] = useContext(FormContext);
 
-  console.log("item checked? ", itemChecked)
+ const [selected, setSelected] = useState("");
+
+  const handleChange = c=>{
+    console.log("selected", c.currentTarget.value);
+    setSelected(c.currentTarget.value);
+  };
+
+  useEffect(() => {
+    setFormData( data => {
+      return {...data, vehicleSelected: selected}
+    });
+  }, [selected])
+
+  console.log("jesam li uspio? ", formData.vehicleSelected);
+
+
   return (
     <div className="selectvehicle">
       <h1 className="selectvehicle__title">Korak 1. Odaberite proizvođača vašeg vozila</h1>
       <section className="selectvehicle__options">
-        <form className="selectvehicle__form">
 
-          <div className="selectvehicle__box">
-          <input type="radio" id="peugeot" name="peugeot"></input>
-          <label for="peugeot">Peugeot</label>
+      <form className="selectvehicle__form">
+      <fieldset id="vehicles">
+        {vehicles.map(v=>{
+          return (<div key={v.value} className="selectvehicle__input">
+            <input type="radio" value={v.name} name="vehicles" checked={selected===v.name} onChange={handleChange} />
+            <label htmlFor={v.name}>{v.label}</label>
           </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="volkswagen" name="volkswagen"></input>
-          <label for="volkswagen">Volkswagen</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="citroen" name="citroen"></input>
-          <label for="citroen">Citroen</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="audi" name="audi"></input>
-          <label for="audi">Audi</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="bmw" name="bmw"></input>
-          <label for="bmw">Bmw</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="seat" name="seat"></input>
-          <label for="seat">Seat</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="alfaromeo" name="alfaromeo"></input>
-          <label for="alfaromeo">Alfa Romeo</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="kia" name="kia"></input>
-          <label for="kia">Kia</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="hyundai" name="hyundai"></input>
-          <label for="hyundai">Hyundai</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="honda" name="honda"></input>
-          <label for="honda">Honda</label>
-          </div>
-
-          <div className="selectvehicle__box">
-          <input type="radio" id="toyota" name="toyota"></input>
-          <label for="toyota">Toyota</label>
-          </div>
-          
-        </form>
-
+          )
+        })}
+      </fieldset>
+    </form>
       </section>
-
-      <NavigationBtn
-            prevPage={prevPage}
-            nextPage={nextPage} />
+      {formData.vehicleSelected != "" ? (<Button 
+      variant="contained" 
+      color="primary" 
+      onClick={nextPage}
+      >Dalje</Button>) : ("Odaberite vozilo")}
+      
       
     </div>
   )

@@ -4,35 +4,39 @@
   align-items: center;
   justify-content: space-between;
   height: 100%;
+  padding: 20px 0;
 }
 
 .selectvehicle__options {
   display: flex;
   flex-wrap: wrap;
-  border: 1px solid lightgrey;
   border-radius: 10px;
-  height: 150px;
+  min-height: 10vh;
   max-width: 760px;
 }
 
-.selectvehicle__form {
+#vehicles {
   display: flex;
   flex-wrap: wrap;
+  padding: 20px 20px;
+  border: none;
+  border-bottom: 1px solid black;
 }
 
-.selectvehicle__box {
-  background-color: white;
-  margin: 10px;
+.selectvehicle__input {
+  margin: 10px 20px;
+  height: 40px;
+  max-width: 180px;
   display: flex;
   align-items: center;
-  padding: 5px 10px;
 }
 
-.selectvehicle__box > label {
-  padding-left: 10px;
+.selectvehicle__input > label {
+  padding-left: 5px;
 }
 
 .selectvehicle__title {
   text-align: center;
   color: black;
+  padding: 20px 0;
 }

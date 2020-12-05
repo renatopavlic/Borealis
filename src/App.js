@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import UserForm from "./components/UserForm/UserForm";
 
 import './App.css';
+import { FormProvider } from "./context/FormContext";
 
 // Material UI custom styling for Modal
 function getModalStyle() {
@@ -23,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: 'absolute',
     width: "80vw",
-    height: "77vh",
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
@@ -52,7 +52,9 @@ function App() {
           open={open}
         onClose={ () => setOpen(false)}>
           <div style={modalStyle} className={classes.paper}>
-            <UserForm />
+            <FormProvider>
+              <UserForm />
+            </FormProvider>
           </div>
         </Modal>
       </main>

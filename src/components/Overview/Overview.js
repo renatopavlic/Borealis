@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import NavigationBtn from '../NavigationBtn/NavigationBtn';
+
+import {FormContext} from "../../context/FormContext"
 import "./Overview.css";
 
 function Overview({ nextPage, prevPage}) {
+
+  const [formData, setFormData] = useContext(FormContext);
+
+  console.log("data is: ", formData)
+
   return (
     <div className="overview">
 
@@ -17,7 +24,7 @@ function Overview({ nextPage, prevPage}) {
             <h3>MODEL VOZILA</h3>
             <button>Uredi</button>
           </div>
-          <h5>Volkswagen</h5>
+            <h5>{formData.vehicleSelected}</h5>
         </div>
         <div className="overview__right">
           <div className="overview__editbox">
@@ -39,12 +46,12 @@ function Overview({ nextPage, prevPage}) {
           <h3>Kontakt podaci</h3>
           <button>Uredi</button>
           </div>
-          <h4>Ime i prezime:</h4><label>Renato Pavlić</label>
-          <h4>Broj telefona:</h4><label>098555555</label>
+          <h4>Ime i prezime:</h4><label>{formData.fullName}</label>
+          <h4>Broj telefona:</h4><label>{formData.phoneNumber}</label>
         </div>
         <div className="overview__right">
-          <h4>Email adresa: </h4><span>renato@poslovni.com</span>
-          <h4>Napomena</h4><span>Kod auta se prilikom prelaska preko rupa čuje lupanje pa bi i to trebalo pogledati</span>
+          <h4>Email adresa: </h4><span>{formData.email}</span>
+          <h4>Napomena</h4><span>{formData.notes}</span>
         </div>
       </div>
 
