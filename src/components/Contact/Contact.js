@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -26,7 +26,7 @@ function Contact({nextPage, prevPage}) {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [notes, setNotes] = useState("");
-  const [formData, setFormData] = useContext(FormContext)
+  const [formData, setFormData] = useContext(FormContext);
 
 
   const addContactInfo = e => {
@@ -38,6 +38,14 @@ function Contact({nextPage, prevPage}) {
     })
   }
 
+  useEffect(() => {
+
+    setEmail(formData.email)
+
+    console.log(formData.email)
+
+
+  }, [] );
   
 
   return (
@@ -55,6 +63,7 @@ function Contact({nextPage, prevPage}) {
       id="outlined-basic"
        label="Email adresa"
         variant="outlined"
+        value={email}
         type="email"
         onChange={e => setEmail(e.target.value)}
         required />

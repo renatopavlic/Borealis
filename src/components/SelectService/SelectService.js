@@ -1,49 +1,121 @@
+import React, { useEffect, useState, useContext } from 'react';
+
 import { Button, TextField } from '@material-ui/core';
-import React from 'react';
+
+import { FormContext} from "../../context/FormContext";
+
 import NavigationBtn from '../NavigationBtn/NavigationBtn';
+
 import "./SelectService.css";
 
+
+
 function SelectService({ nextPage, prevPage }) {
+
+
+  // List of services
+  const services = [
+    {
+      serviceName: "Zamjena ulja i filtera",
+      price: 500,
+      label: "filteri"
+    },
+    {
+      serviceName: "Promjena pakni",
+      price: 450,
+      label: "pakni"
+    },
+    {
+      serviceName: "Promjena guma",
+      price: 100,
+      label: "guma"
+    },
+    {
+      serviceName: "Servis klima uređaja",
+      price: 299,
+      label: "klima"
+    },
+    {
+      serviceName: "Balansiranje guma",
+      price: 50,
+      label: "balansiranje"
+    },
+    {
+      serviceName: "Zamjena ulja u kočnicama",
+      price: 299,
+      label: "kočnice"
+    }
+
+  ];
+
+
+
+  const [selected, setSelected] = useState([]);
+  const [formData, setFormData] = useContext(FormContext);
+
+  const handleChange = (c, i) =>{
+    console.log("dupli upalio?", c.currentTarget, " ", services[i]);
+
+    if(selected.indexOf(i) != -1) {
+
+      selected.splice(selected.indexOf(i), 1);
+      setSelected([...selected]);
+    } else {
+
+      setSelected([...selected, i]);
+
+    }
+  
+  };
+
+  let rezultat = selected.reduce(function(prev, cur) {
+    console.log(prev, cur)
+
+    if(!prev ) return services[cur].price;
+    return prev + services[cur].price;
+  }, 0);
+
+
+  useEffect(() => {
+
+    let selectedObjects = services.filter( (service, i) => {
+      if(selected.indexOf(i) != -1) return service;
+      
+    })
+
+    setFormData( data => {
+      console.log("za igija: ", data)
+      return {...data, selectedServices: selectedObjects}
+    })
+
+  }, [rezultat])
+
+
+  
   return (
+
     <div className="selectservice">
       <h1 className="selectservice__title">Korak 2. Odaberite jednu ili više usluga za koje ste</h1>
 
       <section className="selectservice__options">
 
-        <div className="selectservice__colOne">
-          <div className="selectservice__box">
-            <input type="checkbox" id="zamjenaulja" name="zamjenaulja"></input>
-            <label for="peuzamjenauljageot">Zamjena ulja i filtera (500 kn)</label>
-          </div>
+        {services.map( (service, i) => {
+          return (
+            <div className="selectservice__box">
+              <input 
+              key={i}
+              type="checkbox" 
+              id={service.label} 
+              name={service.label}
+              checked={(selected.indexOf(i) != -1)}
+              onChange={(e) => handleChange(e, i)}
+              />
 
-          <div className="selectservice__box">
-            <input type="checkbox" id="servisklime" name="servisklime"></input>
-            <label for="servisklime">Servis klima uređaja (299 kn)</label>
+            <label for={service.label}>{service.serviceName} ({service.price} kn)</label>
           </div>
-
-          <div className="selectservice__box">
-            <input type="checkbox" id="promjenapakni" name="promjenapakni"></input>
-            <label for="promjenapakni">Promjena pakni (450 kn)</label>
-          </div>
-        </div>
-
-        <div className="selectservice__colTwo">
-          <div className="selectservice__box">
-            <input type="checkbox" id="balansguma" name="balansguma"></input>
-            <label for="balansguma">Balansiranje guma (50 kn)</label>
-          </div>
-
-          <div className="selectservice__box">
-            <input type="checkbox" id="promjenaguma" name="promjenaguma"></input>
-            <label for="promjenaguma">Promjena guma (100 kn)</label>
-          </div>
-
-          <div className="selectservice__box">
-            <input type="checkbox" id="kocniceulje" name="kocniceulje"></input>
-            <label for="kocniceulje">Zamjena ulja u kočnicama (229 kn)</label>
-          </div>
-        </div>
-
+          )
+        })}
+        
       </section>
 
       <div className="selectservice__price">
@@ -70,7 +142,7 @@ function SelectService({ nextPage, prevPage }) {
           <div className="selectservice__calculationColTwo">
           <h4>950,00 kn</h4>
           <h4>- 280,00 kn</h4>
-          <h1><strong>658,00 kn</strong></h1>
+          <h1><strong>{rezultat},00 kn</strong></h1>
           </div>
   
         </div>
@@ -85,3 +157,8 @@ function SelectService({ nextPage, prevPage }) {
 }
 
 export default SelectService;
+
+/*
+
+
+*/

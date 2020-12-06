@@ -21,6 +21,7 @@
   display: flex;
   align-items: center;
   padding: 5px 10px;
+  width: 300px;
 }
 
 .selectservice__box > label {
@@ -29,6 +30,7 @@
 
 .selectservice__title {
   color: black;
+  padding: 20px 0;
 }
 
 .selectservice__colOne,
