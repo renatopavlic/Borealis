@@ -32,10 +32,19 @@ function Overview({ nextPage, prevPage}) {
           <button>Uredi</button>
           </div>
           <div className="overview__price">
-            <h4>Zamjena ulja i filtera</h4> <label>500,00 kn</label>
-            <h4>Promjena pakni</h4><label>450,00 kn</label>
-            <h4>Popust (30%): -285,00 kn</h4>
-            <h3>Ukupno <strong>665,00 kn</strong></h3>
+
+          {formData.selectedServices.map( service => {
+              return (
+                <div className="overview__serviceBox">
+                  <h3>{service.serviceName}</h3>
+                  <h3>{service.price}</h3>
+                </div>
+              )
+            })}
+
+          </div>
+          <div className="overview__finalPrice">
+            <h3>Total : {formData.finalPrice}</h3>
           </div>
         </div>
       </div>
@@ -64,3 +73,17 @@ function Overview({ nextPage, prevPage}) {
 }
 
 export default Overview;
+
+/*
+<h4>Zamjena ulja i filtera</h4> <label>500,00 kn</label>
+            <h4>Promjena pakni</h4><label>450,00 kn</label>
+            <h4>Popust (30%): -285,00 kn</h4>
+            <h3>Ukupno <strong>665,00 kn</strong></h3>
+
+  {formData.servicesSelected.map( service => {
+              return (
+
+              )
+            })};
+
+*/

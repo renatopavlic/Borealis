@@ -10,7 +10,7 @@ export const FormProvider = (props) => {
     fullName: "",
     email: "",
     phoneNumber: "",
-    notes: "h"
+    notes: ""
   });
 
   return (

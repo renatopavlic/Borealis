@@ -39,6 +39,23 @@
   border: 1px solid red;
 }
 
+.overview__price {
+  display: flex;
+  flex-direction: column;
+}
+
+.overview__serviceBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 10px 0;
+  min-width: 300px;
+}
+
+.overview__serviceBox > h3 {
+  font-weight: 400;
+}
+
 .overview__editbox {
   display: flex;
   align-items: center;

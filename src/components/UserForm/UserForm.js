@@ -21,8 +21,6 @@ function UserForm() {
     setStep(step - 1)
   }
 
-  console.log("This is a step number: ", step);
-
   switch (step) {
     case 1:
       return (

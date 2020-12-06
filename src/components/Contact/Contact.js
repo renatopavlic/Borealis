@@ -40,7 +40,10 @@ function Contact({nextPage, prevPage}) {
 
   useEffect(() => {
 
-    setEmail(formData.email)
+    setEmail(formData.email);
+    setFullName(formData.fullName);
+    setPhoneNumber(formData.phoneNumber);
+    setNotes(formData.notes);
 
     console.log(formData.email)
 
@@ -55,7 +58,8 @@ function Contact({nextPage, prevPage}) {
       <form className={classes.root} noValidate autoComplete="off">
       <TextField 
       id="outlined-basic" 
-      label="Ime i prezime" 
+      label="Ime i prezime"
+      value={fullName} 
       variant="outlined"
       onChange={ e => setFullName(e.target.value)}
       required />
@@ -71,6 +75,7 @@ function Contact({nextPage, prevPage}) {
       id="outlined-basic"
       type="text"
        label="Broj telefona"
+       value={phoneNumber}
         variant="outlined"
         onChange={e => setPhoneNumber(e.target.value)}
         required />
@@ -78,6 +83,7 @@ function Contact({nextPage, prevPage}) {
       aria-label="minimum height" 
       rowsMin={7} placeholder="Napomena (opcionalno)" 
       className="contact__formTextArea"
+      value={notes}
       onChange={e => setNotes(e.target.value)}
       />
       <button onClick={addContactInfo}>Probaj, sretno</button>

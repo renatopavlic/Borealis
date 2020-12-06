@@ -52,6 +52,10 @@ function SelectService({ nextPage, prevPage }) {
 
   const [selected, setSelected] = useState([]);
   const [formData, setFormData] = useContext(FormContext);
+  const [coupon, setCoupon] = useState(false);
+  const [couponValue, setCouponValue] = useState("");
+  const [successMsg, setSuccessMsg] = useState(false);
+  const [tax, setTax] = useState(0)
 
   const handleChange = (c, i) =>{
     console.log("dupli upalio?", c.currentTarget, " ", services[i]);
@@ -68,6 +72,10 @@ function SelectService({ nextPage, prevPage }) {
   
   };
 
+  const handleCoupon = () => {
+    coupon ? setCoupon(false) : setCoupon(true)
+  }
+
   let rezultat = selected.reduce(function(prev, cur) {
     console.log(prev, cur)
 
@@ -75,8 +83,22 @@ function SelectService({ nextPage, prevPage }) {
     return prev + services[cur].price;
   }, 0);
 
+  const handleCouponValue = () => {
+    if( couponValue === "borealis") {
+      setSuccessMsg(true);
+      setTax("- " + rezultat * 0.25);
+    } else if (couponValue === "") {
+      
+
+    } else {
+      alert("Pogrešan kod!")
+    }
+  }
+
 
   useEffect(() => {
+
+    handleCouponValue();
 
     let selectedObjects = services.filter( (service, i) => {
       if(selected.indexOf(i) != -1) return service;
@@ -85,10 +107,10 @@ function SelectService({ nextPage, prevPage }) {
 
     setFormData( data => {
       console.log("za igija: ", data)
-      return {...data, selectedServices: selectedObjects}
+      return {...data, selectedServices: selectedObjects, finalPrice: rezultat}
     })
 
-  }, [rezultat])
+  }, [rezultat]);
 
 
   
@@ -119,18 +141,24 @@ function SelectService({ nextPage, prevPage }) {
       </section>
 
       <div className="selectservice__price">
-      <p className="selectservice__couponMsg">Hvala vam, unijeli ste ispravan kod kupona</p>
-        <h2>Imam kupon</h2>
-        <div className="selectservice__coupon">
-           <input 
-           type="text" 
-           placeholder="Kupon kod"
-           className="selectservice__couponInput" />
-           <Button 
-           variant="contained" 
-           color="primary"
-           className="selectservice__couponBtn">Primjeni</Button>
-        </div>
+        {successMsg ? (<p className="selectservice__couponMsg">Hvala vam, unijeli ste ispravan kod kupona</p>) : ("")}
+      
+        <h2 className="selectservice__couponTitle" onClick={handleCoupon}>Imam kupon</h2>
+
+        {coupon ? 
+        (<div className="selectservice__coupon">
+        <input 
+        type="text" 
+        placeholder="Unesite kod kupona ovdje"
+        className="selectservice__couponInput"
+        onChange={(e) => setCouponValue(e.target.value)} />
+        <Button 
+        variant="contained" 
+        color="primary"
+        onClick={handleCouponValue}
+        className="selectservice__couponBtn">Primjeni</Button>
+     </div>) : ("")}
+        
 
         <div className="selectservice__calculation">
           <div className="selectservice__calculationColOne">
@@ -140,8 +168,8 @@ function SelectService({ nextPage, prevPage }) {
           </div>
 
           <div className="selectservice__calculationColTwo">
-          <h4>950,00 kn</h4>
-          <h4>- 280,00 kn</h4>
+          <h4>{rezultat},00 kn</h4>
+          <h4>{tax} kn</h4>
           <h1><strong>{rezultat},00 kn</strong></h1>
           </div>
   

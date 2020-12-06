@@ -54,9 +54,13 @@
   width: 80%;
 }
 
-.selectservice__price > h2 {
+.selectservice__couponTitle {
   color: #3f51b5;
   padding-bottom: 10px;
+}
+
+.selectservice__couponTitle:hover {
+  cursor: pointer;
 }
 
 .selectservice__coupon {
