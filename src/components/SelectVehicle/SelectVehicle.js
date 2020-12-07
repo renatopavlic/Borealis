@@ -57,7 +57,15 @@ function SelectVehicle({ nextPage }) {
     setFormData( data => {
       return {...data, vehicleSelected: selected}
     });
-  }, [selected])
+  }, [selected]);
+
+  useEffect(() => {
+
+    if(formData.vehicleSelected !== selected) {
+      setSelected(formData.vehicleSelected);
+    }
+
+  }, [])
 
 
   return (

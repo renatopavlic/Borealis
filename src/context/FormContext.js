@@ -5,7 +5,7 @@ export const FormContext = createContext();
 export const FormProvider = (props) => {
   const [formData, setFormData] = useState({
     vehicleSelected: "",
-    servicesSelected: [],
+    selectedServices: [],
     finalPrice: 0,
     fullName: "",
     email: "",

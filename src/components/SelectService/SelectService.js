@@ -55,10 +55,13 @@ function SelectService({ nextPage, prevPage }) {
   const [coupon, setCoupon] = useState(false);
   const [couponValue, setCouponValue] = useState("");
   const [successMsg, setSuccessMsg] = useState(false);
-  const [tax, setTax] = useState(0)
+  const [tax, setTax] = useState(0);
+  const [calcWindow, setCalcWindow] = useState(false);
+  const [rezultat, setRezultat] = useState(0);
+  const [finalPrice, setFinalPrice] = useState(0);
 
   const handleChange = (c, i) =>{
-    console.log("dupli upalio?", c.currentTarget, " ", services[i]);
+    // console.log("dupli upalio?", c.currentTarget, " ", services[i]);
 
     if(selected.indexOf(i) != -1) {
 
@@ -69,30 +72,50 @@ function SelectService({ nextPage, prevPage }) {
       setSelected([...selected, i]);
 
     }
-  
   };
 
   const handleCoupon = () => {
     coupon ? setCoupon(false) : setCoupon(true)
-  }
+  };
 
-  let rezultat = selected.reduce(function(prev, cur) {
-    console.log(prev, cur)
+  const izracunaj = selected.reduce(function(prev, cur) {
+      console.log(prev, cur)
+  
+      if(!prev ) return services[cur].price;
+      return prev + services[cur].price;
+    }, 0);
 
-    if(!prev ) return services[cur].price;
-    return prev + services[cur].price;
-  }, 0);
+  
+
 
   const handleCouponValue = () => {
     if( couponValue === "borealis") {
       setSuccessMsg(true);
-      setTax("- " + rezultat * 0.25);
+      setCalcWindow(true);
+      setTax(izracunaj * 0.3);
+      setFormData( data => {
+        return {...data, finalPrice: finalPrice}
+      })
     } else if (couponValue === "") {
       
 
     } else {
       alert("Pogrešan kod!")
     }
+  } ;
+
+  const save = () => {
+
+    handleCouponValue();
+
+    let selectedObjects = services.filter( (service, i) => {
+      if(selected.indexOf(i) != -1) return service;
+      
+    })
+
+    setFormData( data => {
+      return {...data, selectedServices: selectedObjects, finalPrice: calcWindow ? finalPrice : rezultat}
+    })
   }
 
 
@@ -106,13 +129,41 @@ function SelectService({ nextPage, prevPage }) {
     })
 
     setFormData( data => {
-      console.log("za igija: ", data)
       return {...data, selectedServices: selectedObjects, finalPrice: rezultat}
     })
 
   }, [rezultat]);
 
+  useEffect(() => {
 
+    let selectedIndexes = [];
+    services.forEach( (service, i) => {
+      for( let s = 0; s < formData.selectedServices.length; s++) {
+        if(service.label === formData.selectedServices[s].label) {
+          selectedIndexes.push(i)
+        }
+      }
+    })
+
+    console.log(selectedIndexes);
+    
+    setSelected(selectedIndexes)
+
+  }, []);
+
+  useEffect(() => {
+
+    setRezultat(izracunaj)
+
+  }, [selected]);
+
+  useEffect(() => {
+
+    setFinalPrice(rezultat - tax);
+  }, [tax])
+
+
+console.log(finalPrice)
   
   return (
 
@@ -155,12 +206,51 @@ function SelectService({ nextPage, prevPage }) {
         <Button 
         variant="contained" 
         color="primary"
-        onClick={handleCouponValue}
+        onClick={save}
         className="selectservice__couponBtn">Primjeni</Button>
      </div>) : ("")}
+
+     {calcWindow ?
+      (
+      <div className="selectservice__calculation">
+      <div className="selectservice__calculationColOne">
+      <h4>OSNOVICA:</h4>
+      <h4>Popust (30%):</h4>
+      </div>
+
+      <div className="selectservice__calculationColTwo">
+      <h4>{rezultat},00 kn</h4>
+      <h4>- {tax} kn</h4>
+      </div>
+      </div>) : ("")}
+
+     <div className="selectservice__finalPrice">
+     <h3>Ukupno: </h3>
+     <h3>{calcWindow ? finalPrice : rezultat}</h3>
+     </div>
+
         
 
-        <div className="selectservice__calculation">
+        
+  
+        
+
+      </div>
+
+      <NavigationBtn
+            prevPage={prevPage}
+            nextPage={() => {
+              save();
+               nextPage()} } />
+    </div>
+  )
+}
+
+export default SelectService;
+
+/*
+
+<div className="selectservice__calculation">
           <div className="selectservice__calculationColOne">
           <h4>OSNOVICA:</h4>
           <h4>Popust (30%):</h4>
@@ -170,23 +260,8 @@ function SelectService({ nextPage, prevPage }) {
           <div className="selectservice__calculationColTwo">
           <h4>{rezultat},00 kn</h4>
           <h4>{tax} kn</h4>
-          <h1><strong>{rezultat},00 kn</strong></h1>
+          <h1><strong>{rezultat - tax},00 kn</strong></h1>
           </div>
-  
-        </div>
-
-      </div>
-
-      <NavigationBtn
-            prevPage={prevPage}
-            nextPage={nextPage} />
-    </div>
-  )
-}
-
-export default SelectService;
-
-/*
-
+          </div>
 
 */
