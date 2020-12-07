@@ -3,8 +3,9 @@ import NavigationBtn from '../NavigationBtn/NavigationBtn';
 
 import {FormContext} from "../../context/FormContext"
 import "./Overview.css";
+import { Button } from '@material-ui/core';
 
-function Overview({ nextPage, prevPage}) {
+function Overview({ nextPage, prevPage, firstPage, secondPage, thirdPage}) {
 
   const [formData, setFormData] = useContext(FormContext);
 
@@ -22,14 +23,14 @@ function Overview({ nextPage, prevPage}) {
         <div className="overview__left">
           <div className="overview__editbox">
             <h3>MODEL VOZILA</h3>
-            <button>Uredi</button>
+            <Button onClick={firstPage} variant="outlined">uredi</Button>
           </div>
-            <h5>{formData.vehicleSelected}</h5>
+            <h2 className="overview__vehicle">{formData.vehicleSelected}</h2>
         </div>
         <div className="overview__right">
           <div className="overview__editbox">
           <h3>ODABRANE USLUGE</h3>
-          <button>Uredi</button>
+          <Button onClick={secondPage} variant="outlined">uredi</Button>
           </div>
           <div className="overview__price">
 
@@ -37,14 +38,15 @@ function Overview({ nextPage, prevPage}) {
               return (
                 <div className="overview__serviceBox">
                   <h3>{service.serviceName}</h3>
-                  <h3>{service.price}</h3>
+                  <h3>{service.price} kn</h3>
                 </div>
               )
             })}
 
           </div>
           <div className="overview__finalPrice">
-            <h3>Total : {formData.finalPrice}</h3>
+            <h3>Total : </h3>
+            <h2>{formData.finalPrice} kn</h2>
           </div>
         </div>
       </div>
@@ -52,38 +54,28 @@ function Overview({ nextPage, prevPage}) {
       <div className="overview__row">
         <div className="overview__left">
           <div className="overview__editbox">
-          <h3>Kontakt podaci</h3>
-          <button>Uredi</button>
+          <h3>KONTAKT PODACI</h3>
+          <Button onClick={thirdPage} variant="outlined">uredi</Button>
           </div>
-          <h4>Ime i prezime:</h4><label>{formData.fullName}</label>
-          <h4>Broj telefona:</h4><label>{formData.phoneNumber}</label>
+
+          <h4 className="overview__contact">Ime i prezime: <span className="overview__span"> {formData.fullName}</span></h4>
+          <h4 className="overview__contact">Broj telefona: <span className="overview__span">{formData.phoneNumber}</span></h4>
         </div>
+
         <div className="overview__right">
-          <h4>Email adresa: </h4><span>{formData.email}</span>
-          <h4>Napomena</h4><span>{formData.notes}</span>
+          <h4 className="overview__contact">Email adresa: <span className="overview__span">{formData.email}</span> </h4>
+          <h4 className="overview__contact">Napomena:</h4><span className="overview__span">{formData.notes}</span>
         </div>
       </div>
 
-      <NavigationBtn
-            prevPage={prevPage}
-            nextPage={nextPage} />
-     
+      <div className="overview__navigation">
+      <Button variant="contained" onClick={prevPage}>Natrag</Button>
+      <Button variant="contained" color="primary" onClick={nextPage}>Pošalji</Button>
+      </div>
+
+      
     </div>
   )
 }
 
 export default Overview;
-
-/*
-<h4>Zamjena ulja i filtera</h4> <label>500,00 kn</label>
-            <h4>Promjena pakni</h4><label>450,00 kn</label>
-            <h4>Popust (30%): -285,00 kn</h4>
-            <h3>Ukupno <strong>665,00 kn</strong></h3>
-
-  {formData.servicesSelected.map( service => {
-              return (
-
-              )
-            })};
-
-*/

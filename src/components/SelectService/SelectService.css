@@ -30,7 +30,7 @@
 
 .selectservice__title {
   color: black;
-  padding: 20px 0;
+  padding: 40px 0;
 }
 
 .selectservice__colOne,
@@ -43,7 +43,6 @@
 }
 
 .selectservice__price {
-  border: 1px solid lightgray;
   border-radius: 10px;
   padding: 20px;
   display: flex;
@@ -56,7 +55,8 @@
 
 .selectservice__couponTitle {
   color: #3f51b5;
-  padding-bottom: 10px;
+  padding-bottom: 2px;
+  border-bottom: 1px solid #3f51b5;
 }
 
 .selectservice__couponTitle:hover {
@@ -83,7 +83,7 @@
 .selectservice__calculation {
   padding: 20px;
   display: flex;
-  width: 80%;
+  width: 60%;
   border: 1px solid lightgrey;
   border-radius: 10px;
 }
@@ -115,9 +115,16 @@
 
 .selectservice__finalPrice {
   display: flex;
-  background-color: teal;
   align-items: center;
   justify-content: space-between;
   min-width: 200px;
   padding: 5px;
+}
+
+.selectservice__navigation {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 400px;
 }

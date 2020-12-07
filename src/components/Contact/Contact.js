@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { TextareaAutosize } from '@material-ui/core';
+import { Button, TextareaAutosize } from '@material-ui/core';
 
 import "./Contact.css";
 import NavigationBtn from '../NavigationBtn/NavigationBtn';
@@ -29,8 +29,8 @@ function Contact({nextPage, prevPage}) {
   const [formData, setFormData] = useContext(FormContext);
 
 
-  const addContactInfo = e => {
-    e.preventDefault();
+  const addContactInfo = () => {
+
     /* setFormData(prevData => [{...prevData}, {fullName: fullName, email: email, phoneNumber: phoneNumber, notes: notes}]) */
 
     setFormData( data => {
@@ -55,7 +55,9 @@ function Contact({nextPage, prevPage}) {
     <div className="contact">
       <h1 className="contact__title">Korak 3. Vaši kontakt podaci</h1>
 
+      <div className="contact__form">
       <form className={classes.root} noValidate autoComplete="off">
+        
       <TextField 
       id="outlined-basic" 
       label="Ime i prezime"
@@ -80,18 +82,23 @@ function Contact({nextPage, prevPage}) {
         onChange={e => setPhoneNumber(e.target.value)}
         required />
       <TextareaAutosize 
-      aria-label="minimum height" 
-      rowsMin={7} placeholder="Napomena (opcionalno)" 
-      className="contact__formTextArea"
-      value={notes}
-      onChange={e => setNotes(e.target.value)}
+        aria-label="minimum height" 
+        rowsMin={7} placeholder="Napomena (opcionalno)" 
+        className="contact__formTextArea"
+        value={notes}
+        onChange={e => setNotes(e.target.value)}
       />
-      <button onClick={addContactInfo}>Probaj, sretno</button>
-    </form>
 
-    <NavigationBtn
-            prevPage={prevPage}
-            nextPage={nextPage} />
+    </form>
+      </div>
+
+    <div className="contact__navigation">
+      <Button variant="contained" onClick={prevPage}>Natrag</Button>
+      {(fullName.length > 0 && email.length > 0 && phoneNumber.length > 8) ? (<Button variant="contained" color="primary" onClick={() => {
+        addContactInfo();
+        nextPage()}}>Dalje</Button>) : ("")} 
+    
+    </div>
     </div>
   )
 }

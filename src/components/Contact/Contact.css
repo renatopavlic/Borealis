@@ -8,4 +8,17 @@
 
 .contact__title {
   color: black;
+  padding: 40px 0;
+}
+
+.contact__form {
+  padding: 20px 30px;
+}
+
+.contact__navigation {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 400px;
 }

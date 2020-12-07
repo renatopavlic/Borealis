@@ -21,6 +21,18 @@ function UserForm() {
     setStep(step - 1)
   }
 
+  const firstPage = () => {
+    setStep(1)
+  }
+
+  const secondPage = () => {
+    setStep(2)
+  }
+
+  const thirdPage = () => {
+    setStep(3)
+  }
+
   switch (step) {
     case 1:
       return (
@@ -47,7 +59,10 @@ function UserForm() {
       return (
         <Overview
          nextPage={nextPage} 
-         prevPage={prevPage} />
+         prevPage={prevPage}
+         firstPage={firstPage}
+         secondPage={secondPage}
+         thirdPage={thirdPage} />
       );
 
     case 5:

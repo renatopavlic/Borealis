@@ -41,3 +41,7 @@
   color: black;
   padding: 20px 0;
 }
+
+.selectvehicle__msg {
+  color: red;
+}

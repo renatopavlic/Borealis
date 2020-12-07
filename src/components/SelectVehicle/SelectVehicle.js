@@ -91,7 +91,7 @@ function SelectVehicle({ nextPage }) {
       variant="contained" 
       color="primary" 
       onClick={nextPage}
-      >Dalje</Button>) : ("Odaberite vozilo *")}
+      >Dalje</Button>) : (<p className="selectvehicle__msg">Odaberite vozilo *</p>)}
           
     </div>
   )

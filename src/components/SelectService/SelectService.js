@@ -4,8 +4,6 @@ import { Button, TextField } from '@material-ui/core';
 
 import { FormContext} from "../../context/FormContext";
 
-import NavigationBtn from '../NavigationBtn/NavigationBtn';
-
 import "./SelectService.css";
 
 
@@ -194,7 +192,7 @@ console.log(finalPrice)
       <div className="selectservice__price">
         {successMsg ? (<p className="selectservice__couponMsg">Hvala vam, unijeli ste ispravan kod kupona</p>) : ("")}
       
-        <h2 className="selectservice__couponTitle" onClick={handleCoupon}>Imam kupon</h2>
+        <h3 className="selectservice__couponTitle" onClick={handleCoupon}>Imam kupon</h3>
 
         {coupon ? 
         (<div className="selectservice__coupon">
@@ -225,43 +223,22 @@ console.log(finalPrice)
       </div>) : ("")}
 
      <div className="selectservice__finalPrice">
-     <h3>Ukupno: </h3>
-     <h3>{calcWindow ? finalPrice : rezultat}</h3>
-     </div>
-
-        
-
-        
-  
-        
+     <h2>Ukupno: </h2>
+     <h2>{calcWindow ? finalPrice : rezultat} kn</h2>
+     </div>     
 
       </div>
 
-      <NavigationBtn
-            prevPage={prevPage}
-            nextPage={() => {
-              save();
-               nextPage()} } />
+      <div className="selectservice__navigation">
+      <Button variant="contained" onClick={prevPage}>Natrag</Button>
+      {formData.selectedServices.length > 0 ? (<Button variant="contained" color="primary" onClick={() => {
+        save();
+        nextPage()}}>Dalje</Button>) : ("")}
+      
+ 
+      </div>
     </div>
   )
 }
 
 export default SelectService;
-
-/*
-
-<div className="selectservice__calculation">
-          <div className="selectservice__calculationColOne">
-          <h4>OSNOVICA:</h4>
-          <h4>Popust (30%):</h4>
-          <h1>Ukupno:</h1>
-          </div>
-
-          <div className="selectservice__calculationColTwo">
-          <h4>{rezultat},00 kn</h4>
-          <h4>{tax} kn</h4>
-          <h1><strong>{rezultat - tax},00 kn</strong></h1>
-          </div>
-          </div>
-
-*/
