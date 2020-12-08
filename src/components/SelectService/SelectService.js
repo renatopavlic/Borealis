@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 
-import { Button, TextField } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 import { FormContext} from "../../context/FormContext";
 
@@ -47,7 +47,6 @@ function SelectService({ nextPage, prevPage }) {
   ];
 
 
-
   const [selected, setSelected] = useState([]);
   const [formData, setFormData] = useContext(FormContext);
   const [coupon, setCoupon] = useState(false);
@@ -55,30 +54,27 @@ function SelectService({ nextPage, prevPage }) {
   const [successMsg, setSuccessMsg] = useState(false);
   const [tax, setTax] = useState(0);
   const [calcWindow, setCalcWindow] = useState(false);
-  const [rezultat, setRezultat] = useState(0);
+  const [result, setResult] = useState(0);
   const [finalPrice, setFinalPrice] = useState(0);
 
   const handleChange = (c, i) =>{
-    // console.log("dupli upalio?", c.currentTarget, " ", services[i]);
-
     if(selected.indexOf(i) != -1) {
-
       selected.splice(selected.indexOf(i), 1);
       setSelected([...selected]);
     } else {
-
       setSelected([...selected, i]);
 
     }
   };
 
   const handleCoupon = () => {
+    // Toggle between true and false
     coupon ? setCoupon(false) : setCoupon(true)
   };
 
-  const izracunaj = selected.reduce(function(prev, cur) {
-      console.log(prev, cur)
-  
+
+  // Calculate final price
+  const calculate = selected.reduce(function(prev, cur) {
       if(!prev ) return services[cur].price;
       return prev + services[cur].price;
     }, 0);
@@ -87,10 +83,10 @@ function SelectService({ nextPage, prevPage }) {
 
 
   const handleCouponValue = () => {
-    if( couponValue === "borealis") {
+    if( couponValue === "Tokić123") {
       setSuccessMsg(true);
       setCalcWindow(true);
-      setTax(izracunaj * 0.3);
+      setTax(calculate * 0.3);
       setFormData( data => {
         return {...data, finalPrice: finalPrice}
       })
@@ -100,40 +96,33 @@ function SelectService({ nextPage, prevPage }) {
     } else {
       alert("Pogrešan kod!")
     }
-  } ;
+  };
 
   const save = () => {
-
     handleCouponValue();
-
     let selectedObjects = services.filter( (service, i) => {
       if(selected.indexOf(i) != -1) return service;
-      
-    })
+    });
 
     setFormData( data => {
-      return {...data, selectedServices: selectedObjects, finalPrice: calcWindow ? finalPrice : rezultat}
+      return {...data, selectedServices: selectedObjects, finalPrice: calcWindow ? finalPrice : result}
     })
   }
 
 
   useEffect(() => {
-
     handleCouponValue();
-
     let selectedObjects = services.filter( (service, i) => {
-      if(selected.indexOf(i) != -1) return service;
-      
-    })
+      if(selected.indexOf(i) != -1) return service;  
+    });
 
     setFormData( data => {
-      return {...data, selectedServices: selectedObjects, finalPrice: rezultat}
+      return {...data, selectedServices: selectedObjects, finalPrice: result}
     })
 
-  }, [rezultat]);
+  }, [result]);
 
   useEffect(() => {
-
     let selectedIndexes = [];
     services.forEach( (service, i) => {
       for( let s = 0; s < formData.selectedServices.length; s++) {
@@ -142,30 +131,25 @@ function SelectService({ nextPage, prevPage }) {
         }
       }
     })
-
-    console.log(selectedIndexes);
     
     setSelected(selectedIndexes)
 
   }, []);
 
   useEffect(() => {
-
-    setRezultat(izracunaj)
+    setResult(calculate);
 
   }, [selected]);
 
   useEffect(() => {
-
-    setFinalPrice(rezultat - tax);
+    setFinalPrice(result - tax);
   }, [tax])
 
-
-console.log(finalPrice)
   
   return (
 
     <div className="selectservice">
+
       <h1 className="selectservice__title">Korak 2. Odaberite jednu ili više usluga za koje ste</h1>
 
       <section className="selectservice__options">
@@ -195,47 +179,45 @@ console.log(finalPrice)
         <h3 className="selectservice__couponTitle" onClick={handleCoupon}>Imam kupon</h3>
 
         {coupon ? 
-        (<div className="selectservice__coupon">
-        <input 
-        type="text" 
-        placeholder="Unesite kod kupona ovdje"
-        className="selectservice__couponInput"
-        onChange={(e) => setCouponValue(e.target.value)} />
-        <Button 
-        variant="contained" 
-        color="primary"
-        onClick={save}
-        className="selectservice__couponBtn">Primjeni</Button>
-     </div>) : ("")}
+          (<div className="selectservice__coupon">
+            <input 
+            type="text" 
+            placeholder="Unesite kod kupona ovdje"
+            className="selectservice__couponInput"
+            onChange={(e) => setCouponValue(e.target.value)} />
+            <Button 
+            variant="contained" 
+            color="primary"
+            onClick={save}
+            className="selectservice__couponBtn">Primjeni</Button>
+          </div>) : ("")}
 
-     {calcWindow ?
-      (
-      <div className="selectservice__calculation">
-      <div className="selectservice__calculationColOne">
-      <h4>OSNOVICA:</h4>
-      <h4>Popust (30%):</h4>
-      </div>
+        {calcWindow ?
+          (
+          <div className="selectservice__calculation">
+            <div className="selectservice__calculationColOne">
+            <h4>OSNOVICA:</h4>
+            <h4>Popust (30%):</h4>
+            </div>
 
-      <div className="selectservice__calculationColTwo">
-      <h4>{rezultat},00 kn</h4>
-      <h4>- {tax} kn</h4>
-      </div>
-      </div>) : ("")}
+            <div className="selectservice__calculationColTwo">
+              <h4>{result},00 kn</h4>
+              <h4>- {tax} kn</h4>
+            </div>
+          </div>) : ("")}
 
-     <div className="selectservice__finalPrice">
-     <h2>Ukupno: </h2>
-     <h2>{calcWindow ? finalPrice : rezultat} kn</h2>
-     </div>     
+          <div className="selectservice__finalPrice">
+            <h2>Ukupno: </h2>
+            <h2>{calcWindow ? finalPrice : result} kn</h2>
+          </div>     
 
       </div>
 
       <div className="selectservice__navigation">
-      <Button variant="contained" onClick={prevPage}>Natrag</Button>
-      {formData.selectedServices.length > 0 ? (<Button variant="contained" color="primary" onClick={() => {
-        save();
-        nextPage()}}>Dalje</Button>) : ("")}
-      
- 
+        <Button variant="contained" onClick={prevPage}>Natrag</Button>
+        {formData.selectedServices.length > 0 ? (<Button variant="contained" color="primary" onClick={() => {
+          save();
+          nextPage()}}>Dalje</Button>) : ("")}
       </div>
     </div>
   )

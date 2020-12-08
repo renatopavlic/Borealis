@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 
-import { Button } from '@material-ui/core';
 import { FormContext} from "../../context/FormContext";
+import { Button } from '@material-ui/core';
 
 import "./SelectVehicle.css";
 
@@ -42,17 +42,15 @@ function SelectVehicle({ nextPage }) {
     label: "Toyota"
   }];
 
- const [formData, setFormData] = useContext(FormContext);
-
- const [selected, setSelected] = useState("");
+  const [formData, setFormData] = useContext(FormContext);
+  const [selected, setSelected] = useState("");
 
   const handleChange = c =>{
-  
+    // Get current target
     setSelected(c.currentTarget.value);
   };
 
   useEffect(() => {
-
     // Save user selection
     setFormData( data => {
       return {...data, vehicleSelected: selected}
@@ -60,11 +58,9 @@ function SelectVehicle({ nextPage }) {
   }, [selected]);
 
   useEffect(() => {
-
     if(formData.vehicleSelected !== selected) {
       setSelected(formData.vehicleSelected);
     }
-
   }, [])
 
 
@@ -74,25 +70,25 @@ function SelectVehicle({ nextPage }) {
       <h1 className="selectvehicle__title">Korak 1. Odaberite proizvođača vašeg vozila</h1>
 
       <section className="selectvehicle__options">
-
-      <form className="selectvehicle__form">
-        <fieldset id="vehicles">
-          {vehicles.map(v=>{
-            return (<div key={v.value} className="selectvehicle__input">
-              <input type="radio" value={v.name} name="vehicles" checked={selected===v.name} onChange={handleChange} />
-              <label htmlFor={v.name}>{v.label}</label>
-            </div>
-            )
-          })}
-        </fieldset>
-      </form>
+        <form className="selectvehicle__form">
+          <fieldset id="vehicles">
+            {vehicles.map(v=>{
+              return (<div key={v.value} className="selectvehicle__input">
+                <input type="radio" value={v.name} name="vehicles" checked={selected===v.name} onChange={handleChange} />
+                <label htmlFor={v.name}>{v.label}</label>
+              </div>
+              )
+            })}
+          </fieldset>
+        </form>
       </section>
-      {formData.vehicleSelected != "" ? (<Button 
-      variant="contained" 
-      color="primary" 
-      onClick={nextPage}
-      >Dalje</Button>) : (<p className="selectvehicle__msg">Odaberite vozilo *</p>)}
-          
+
+        {formData.vehicleSelected != "" ? (<Button 
+        variant="contained" 
+        color="primary" 
+        onClick={nextPage}
+        >Dalje</Button>) : (<p className="selectvehicle__msg">Odaberite vozilo *</p>)}
+            
     </div>
   )
 }
